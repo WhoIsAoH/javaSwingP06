@@ -1,34 +1,26 @@
 package com.mycompany.prabincps4005;
 
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class PrabinCPS4005 {
-
-  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
+    
   private DbConn connection;
   private Scanner scanner;
-
   public PrabinCPS4005() {
   }
-
   public PrabinCPS4005(DbConn conn) {
     this.connection = conn;
     this.scanner = new Scanner(System.in);
   }
-
   public PrabinCPS4005(Scanner scanner, DbConn connection) {
     this.scanner = scanner;
     this.connection = connection;
   }
-
   public static void main(String[] args) throws SQLException {
     Scanner scanner = new Scanner(System.in);
-
     System.out.println("What do you want? GUI or CUI?");
     String choice = scanner.nextLine().toLowerCase();
     if (choice.equals("gui")) {
@@ -45,7 +37,6 @@ public class PrabinCPS4005 {
     } else {
       System.out.println("Invalid choice. Please enter 'gui' or 'cui'.");
     }
-
     scanner.close();
   }
 
@@ -58,9 +49,7 @@ public class PrabinCPS4005 {
 
     boolean isAuthenticated = connection.authenticateUser(email, password);
     if (isAuthenticated) {
-
       System.out.println("Object Oriented Programming");
-
       while (true) {
         System.out.println("****************************************\n");
         System.out.println("****************************************");
@@ -73,7 +62,6 @@ public class PrabinCPS4005 {
         System.out.println("* 5       \t->  Delete Case         *");
         System.out.println("****************************************");
         System.out.println("Please choose the options:");
-
         System.out.println("Choose one option:");
         int firstSelect = scanner.nextInt();
         scanner.nextLine();
