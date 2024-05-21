@@ -1,4 +1,4 @@
-package pkg2308819assignmentcps4005;
+package com.mycompany.prabincps4005;
 
 import java.sql.SQLException;
 import java.time.format.DateTimeFormatter;
@@ -6,22 +6,22 @@ import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
-public class Main {
+public class PrabinCPS4005 {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private DbConn connection;
     private Scanner scanner;
 
-    public Main() {
+    public PrabinCPS4005() {
     }
 
-    public Main(DbConn conn) {
+    public PrabinCPS4005(DbConn conn) {
         this.connection = conn;
         this.scanner = new Scanner(System.in);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("What do you want? GUI or CUI?");
@@ -34,7 +34,7 @@ public class Main {
             });
         } else if (choice.equals("cui")) {
             DbConn conn = new DbConn();
-            Main app = new Main(conn);
+            PrabinCPS4005 app = new PrabinCPS4005(conn);
             app.cui();
             conn.dbClose();
         } else {
@@ -44,38 +44,52 @@ public class Main {
         scanner.close();
     }
 
-    public void cui() {
-        System.out.println("Object Oriented Programming");
-        while (true) {
-            System.out.println("****************************************\n");
-            System.out.println("****************************************");
-            System.out.println("* options\t->   Actions            *");
-            System.out.println("****************************************");
-            System.out.println("* 1       \t->  Add Case            *");
-            System.out.println("* 2       \t->  View Single Case    *");
-            System.out.println("* 3       \t->  View All Case       *");
-            System.out.println("* 4       \t->  Update Case         *");
-            System.out.println("* 5       \t->  Delete Case         *");
-            System.out.println("****************************************");
-            System.out.println("Please choose the options:");
+    public void cui() throws SQLException {
+        System.out.println("Enter your email:");
+        String email = scanner.nextLine();
 
-            System.out.println("Choose one option:");
-            int firstSelect = scanner.nextInt();
-            scanner.nextLine();
-            switch (firstSelect) {
-                case 1 ->
-                    this.caseFiles();
-                case 2 ->
-                    this.clientInformation();
-                case 3 ->
-                    this.dateFiles();
-                case 4 ->
-                    this.documentMenu();
-                default ->
-                    System.out.println("Invalid option selected.");
+        System.out.println("Enter your password:");
+        String password = scanner.nextLine();
 
+        boolean isAuthenticated = connection.authenticateUser(email, password);
+        if (isAuthenticated) {
+
+            System.out.println("Object Oriented Programming");
+
+            while (true) {
+                System.out.println("****************************************\n");
+                System.out.println("****************************************");
+                System.out.println("* options\t->   Actions            *");
+                System.out.println("****************************************");
+                System.out.println("* 1       \t->  Add Case            *");
+                System.out.println("* 2       \t->  View Single Case    *");
+                System.out.println("* 3       \t->  View All Case       *");
+                System.out.println("* 4       \t->  Update Case         *");
+                System.out.println("* 5       \t->  Delete Case         *");
+                System.out.println("****************************************");
+                System.out.println("Please choose the options:");
+
+                System.out.println("Choose one option:");
+                int firstSelect = scanner.nextInt();
+                scanner.nextLine();
+                switch (firstSelect) {
+                    case 1 ->
+                        this.caseFiles();
+                    case 2 ->
+                        this.clientInformation();
+                    case 3 ->
+                        this.dateFiles();
+                    case 4 ->
+                        this.documentMenu();
+                    default ->
+                        System.out.println("Invalid option selected.");
+
+                }
             }
+        } else {
+            System.out.println("Error during authentication");
         }
+        scanner.close();
     }
 
     private void caseFiles() {

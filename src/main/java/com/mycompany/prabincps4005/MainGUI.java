@@ -1,4 +1,4 @@
-package pkg2308819assignmentcps4005;
+package com.mycompany.prabincps4005;
 
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
@@ -16,7 +16,46 @@ public class MainGUI extends JFrame {
     private JTextArea outputArea;
 
     public MainGUI() {
-        super("Law Firm App");
+                super("Law Firm App");
+
+             connection = new DbConn();
+
+        // Call the login method
+        boolean isAuthenticated = login();
+        if (isAuthenticated) {
+            // Initialize and show the main GUI
+            initializeGUI();
+        } else {
+            // Show error message and exit
+            JOptionPane.showMessageDialog(null, "Authentication failed. Exiting.");
+            System.exit(0);
+        }
+    }
+
+    private boolean login() {
+        JTextField emailField = new JTextField();
+        JPasswordField passwordField = new JPasswordField();
+
+        Object[] fields = {
+            "Email:", emailField,
+            "Password:", passwordField
+        };
+
+        int result = JOptionPane.showConfirmDialog(null, fields, "Login", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            String email = emailField.getText();
+            String password = new String(passwordField.getPassword());
+
+            try {
+                return connection.authenticateUser(email, password);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error authenticating user: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return false;
+    
+    }
+    private void initializeGUI() {
         connection = new DbConn();
 
         // Set up main frame

@@ -1,4 +1,4 @@
-package pkg2308819assignmentcps4005;
+package com.mycompany.prabincps4005;
 
 public class Client {
 

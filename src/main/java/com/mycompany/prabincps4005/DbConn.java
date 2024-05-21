@@ -1,4 +1,4 @@
-package pkg2308819assignmentcps4005;
+package com.mycompany.prabincps4005;
 
 
 import java.sql.Connection;
@@ -107,6 +107,22 @@ public class DbConn {
         }
     }
 
+    //authentication
+  public boolean authenticateUser(String name, String address) throws SQLException {
+    boolean isAuth = false;
+    String sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+      pstmt.setString(1, name);
+      pstmt.setString(2, address);
+      ResultSet rs = pstmt.executeQuery();
+      if (rs.next()) {
+        isAuth=true;
+      }else
+        isAuth=false;
+    }
+    return isAuth;
+  }
+    
     //client connection with db
     public void createClient(String name, String address, String phone, String email) throws SQLException {
         String sql = "insert into clients(client_name,client_address, client_phone, client_email) values(?,?,?,?)";
