@@ -51,29 +51,27 @@ public class PrabinCPS4005 {
     if (isAuthenticated) {
       System.out.println("Object Oriented Programming");
       while (true) {
-        System.out.println("****************************************\n");
-        System.out.println("****************************************");
-        System.out.println("* options\t->   Actions            *");
-        System.out.println("****************************************");
-        System.out.println("* 1       \t->  Add Case            *");
-        System.out.println("* 2       \t->  View Single Case    *");
-        System.out.println("* 3       \t->  View All Case       *");
-        System.out.println("* 4       \t->  Update Case         *");
-        System.out.println("* 5       \t->  Delete Case         *");
-        System.out.println("****************************************");
-        System.out.println("Please choose the options:");
+        System.out.println("******************************************");
+        System.out.println("******************************************");
+        System.out.println("| options\t|->   Actions            *");
+        System.out.println("******************************************");
+        System.out.println("* 1       \t|->  Case Files          *");
+        System.out.println("* 2       \t|->  Client Information  *");
+        System.out.println("* 3       \t|->  Date Files          *"); 
+        System.out.println("* 4       \t|->  Document Files      *"); 
+        System.out.println("******************************************");
         System.out.println("Choose one option:");
         int firstSelect = scanner.nextInt();
         scanner.nextLine();
         switch (firstSelect) {
-          case 1 -> this.caseFiles();
-          case 2 -> this.clientInformation();
-          case 3 -> this.dateFiles();
-          case 4 -> this.documentMenu();
-          default -> System.out.println("Invalid option selected.");
+            case 1 -> this.caseFiles();
+            case 2 -> this.clientInformation();
+            case 3 -> this.dateFiles(); 
+            case 4 -> this.documentMenu(); 
+            default -> System.out.println("Invalid option selected.");
 
         }
-      }
+    }
     } else {
       System.out.println("Error during authentication");
     }

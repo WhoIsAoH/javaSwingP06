@@ -33,6 +33,8 @@ public class DbConn {
             st.execute("CREATE TABLE IF NOT EXISTS cases (case_id INTEGER PRIMARY KEY, case_number TEXT UNIQUE, case_title TEXT NOT NULL, case_description TEXT, case_status TEXT, date_filed TEXT, date_closed TEXT, client_id INTEGER, FOREIGN KEY (client_id) REFERENCES clients(client_id) ON DELETE SET NULL)");
             st.execute("CREATE TABLE IF NOT EXISTS documents (document_id INTEGER PRIMARY KEY, case_id INTEGER, document_name TEXT NOT NULL, document_type TEXT, document_path TEXT, FOREIGN KEY (case_id) REFERENCES cases(case_id) ON DELETE CASCADE)");
             st.execute("CREATE TABLE IF NOT EXISTS important_dates (date_id INTEGER PRIMARY KEY, case_id INTEGER, event_date TEXT, event_description TEXT, FOREIGN KEY (case_id) REFERENCES cases(case_id) ON DELETE CASCADE)");
+            st.execute("CREATE TABLE IF NOT EXISTS users (user_id INTEGER PRIMARY KEY, email TEXT, password TEXT");
+
             populateDataIntoTables();
         } catch (SQLException e) {
             System.out.println("Error creating tables: " + e.getMessage());
@@ -41,6 +43,13 @@ public class DbConn {
 
     private void populateDataIntoTables() {
         try (Statement st = connection.createStatement()) {
+            
+            try (ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM users")) {
+                if (rs.getInt(1) == 0) {
+                    st.execute("INSERT INTO users ( email, password) VALUES ('prabin@gmail.com', 'prabin')");
+                }
+            }
+            
             // Populate clients table
             try (ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM clients")) {
                 if (rs.getInt(1) == 0) {
